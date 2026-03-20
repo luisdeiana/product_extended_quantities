@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<data>
+    <xpath expr="/tree/field[@name='cost_currency_display']" position="before">
+        <field name="forecast_quantity" string="Stock Previsto" optional="0" readonly="1"/>
+        <field name="quantity" string="Stock" optional="0" readonly="1"/>
+    </xpath>
+</data>

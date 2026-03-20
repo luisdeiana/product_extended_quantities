@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<tryton>
+    <data>
+        <record model="ir.ui.view" id="product_view_form_extended_quantities">
+            <field name="model">product.product</field>
+            <field name="inherit" ref="product.product_view_form"/>
+            <field name="name">product_form</field>
+        </record>
+
+        <record model="ir.ui.view" id="product_view_tree_extended_quantities">
+            <field name="model">product.product</field>
+            <field name="inherit" ref="product.product_view_tree"/>
+            <field name="name">product_tree</field>
+        </record>
+
+        <record model="ir.ui.view" id="template_view_tree_extended_quantities">
+            <field name="model">product.template</field>
+            <field name="inherit" ref="product.template_view_tree"/>
+            <field name="name">template_tree</field>
+        </record>
+
+        <record model="ir.ui.view" id="product_view_tree_cost_currency_extended_quantities">
+            <field name="model">product.product</field>
+            <field name="inherit" ref="product.product_view_tree_simple"/>
+            <field name="priority" eval="99"/>
+            <field name="name">product_tree_cost_currency</field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_line_view_form_extended_quantities">
+            <field name="model">sale.line</field>
+            <field name="inherit" ref="sale.sale_line_view_form"/>
+            <field name="name">sale_line</field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_line_view_form_extended_quantities">
+            <field name="model">purchase.line</field>
+            <field name="inherit" ref="purchase.purchase_line_view_form"/>
+            <field name="name">purchase_line</field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_line_view_tree_extended_quantities">
+            <field name="model">sale.line</field>
+            <field name="inherit" ref="sale.sale_line_view_tree"/>
+            <field name="name">sale_line_tree</field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_line_view_tree_extended_quantities">
+            <field name="model">purchase.line</field>
+            <field name="inherit" ref="purchase.purchase_line_view_tree"/>
+            <field name="name">purchase_line_tree</field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_view_form_no_sequence_lines">
+            <field name="model">sale.sale</field>
+            <field name="inherit" ref="sale.sale_view_form"/>
+            <field name="name">sale_form_no_sequence_lines</field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_view_form_no_sequence_lines">
+            <field name="model">purchase.purchase</field>
+            <field name="inherit" ref="purchase.purchase_view_form"/>
+            <field name="name">purchase_form_no_sequence_lines</field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_line_tree_sequence_no_autosort">
+            <field name="model">sale.line</field>
+            <field name="inherit" ref="sale.sale_line_view_tree_sequence"/>
+            <field name="name">sale_line_tree_sequence_no_autosort</field>
+            <field name="data"><![CDATA[<?xml version="1.0"?>
+<data>
+    <xpath expr="/tree" position="replace">
+        <tree>
+            <field name="sale" expand="1"/>
+            <field name="type" optional="1"/>
+            <field name="product" expand="1" optional="0"/>
+            <field name="summary" expand="1" optional="1"/>
+            <field name="quantity" symbol="unit"/>
+            <field name="unit_price"/>
+            <field name="taxes" optional="0"/>
+            <field name="amount"/>
+        </tree>
+    </xpath>
+</data>
+]]></field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_line_tree_sequence_no_autosort">
+            <field name="model">purchase.line</field>
+            <field name="inherit" ref="purchase.purchase_line_view_tree_sequence"/>
+            <field name="name">purchase_line_tree_sequence_no_autosort</field>
+            <field name="data"><![CDATA[<?xml version="1.0"?>
+<data>
+    <xpath expr="/tree" position="replace">
+        <tree>
+            <field name="purchase" expand="1"/>
+            <field name="type" optional="1"/>
+            <field name="product" expand="1" optional="0"/>
+            <field name="product_supplier" expand="1" optional="1"/>
+            <field name="summary" expand="1" optional="1"/>
+            <field name="quantity" symbol="unit"/>
+            <field name="unit_price"/>
+            <field name="taxes" optional="0"/>
+            <field name="amount"/>
+        </tree>
+    </xpath>
+</data>
+]]></field>
+        </record>
+
+    </data>
+</tryton>

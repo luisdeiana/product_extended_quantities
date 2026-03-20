@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+.env
+desktop.ini
+*.swp
+*.swo
+.DS_Store
+*.pyc

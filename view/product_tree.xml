@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<data>
+    <xpath expr="//field[@name='list_price']" position="before">
+        <field name="quantity" optional="0" readonly="1"/>
+        <field name="forecast_quantity" optional="0" readonly="1"/>
+    </xpath>
+</data>
