@@ -67,6 +67,13 @@ class Product(metaclass=PoolMeta):
         with Transaction().set_context(**stock_context):
             return super().search_quantity(name, domain)
 
+    def get_rec_name(self, name):
+        rec_name = super().get_rec_name(name)
+        code = getattr(self, 'code', None) or getattr(self, 'suffix_code', None)
+        if code:
+            return f'[{code}] {rec_name}'
+        return rec_name
+
     @classmethod
     def search_rec_name(cls, name, clause):
         context = Transaction().context
