@@ -67,13 +67,69 @@ class Product(metaclass=PoolMeta):
         with Transaction().set_context(**stock_context):
             return super().search_quantity(name, domain)
 
-    def get_rec_name(self, name):
-        rec_name = super().get_rec_name(name)
-        code = getattr(self, 'code', None) or getattr(self, 'suffix_code', None)
-        if code:
-            return f'[{code}] {rec_name}'
-        return rec_name
+    @classmethod
+    def search_rec_name(cls, name, clause):
+        context = Transaction().context
 
+        _, operator, operand, *extra = clause
+        if isinstance(operand, str):
+            raw_text = operand.strip()
+            normalized = raw_text.replace('%', '').strip()
+            if operator.endswith('like') and len(normalized) < 3:
+                return [('id', '=', None)]
+
+        base_domain = super().search_rec_name(name, clause)
+
+        search_domain = base_domain
+
+        if context.get('peq_unordered_product_search'):
+            if (isinstance(operand, str)
+                    and operator.endswith('like')
+                    and len(operand.split()) > 1):
+                words = [w.strip('%') for w in operand.split() if w.strip('%')]
+                if words:
+                    words_domain = ['AND']
+                    for word in words:
+                        clean_word = word.strip('[](){}')
+                        value = f'%{clean_word}%'
+                        words_domain.append(['OR',
+                            ('code', operator, value, *extra),
+                            ('suffix_code', operator, value, *extra),
+                            ('identifiers.code', operator, value, *extra),
+                            ('template.name', operator, value, *extra),
+                            ('template.code', operator, value, *extra),
+                            ])
+                    search_domain = words_domain
+
+        if not context.get('peq_filter_products_by_stock'):
+            return search_domain
+
+        # Pre-filtered search: find matching products by text first (fast,
+        # uses indexes), then compute stock only for those results.  This
+        # avoids the expensive full-table stock aggregation that the ORM
+        # would trigger when evaluating (quantity > 0) as a domain clause.
+        quantity_field = ('forecast_quantity'
+            if context.get('peq_filter_products_by_forecast', True)
+            else 'quantity')
+
+        products = cls.search(search_domain)
+        if not products:
+            return [('id', '=', None)]
+
+        stock_context = cls._get_default_stock_context()
+        if stock_context:
+            with Transaction().set_context(**stock_context):
+                quantities = cls.get_quantity(products, quantity_field)
+        else:
+            quantities = cls.get_quantity(products, quantity_field)
+
+        result_ids = [
+            p.id for p in products
+            if p.type != 'goods' or quantities.get(p.id, 0) > 0
+        ]
+        if not result_ids:
+            return [('id', '=', None)]
+        return [('id', 'in', result_ids)]
 
 class Template(metaclass=PoolMeta):
     __name__ = 'product.template'

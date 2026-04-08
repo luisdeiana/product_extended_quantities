@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<data>
+    <xpath expr="/form/notebook/page[@id='sale']/field[@name='lines']" position="before">
+        <group id="peq_filters" col="4" colspan="4">
+            <label name="filter_products_by_stock"/>
+            <field name="filter_products_by_stock"/>
+            <label name="filter_products_by_forecast"/>
+            <field name="filter_products_by_forecast"/>
+        </group>
+    </xpath>
+</data>

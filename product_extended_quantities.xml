@@ -1,22 +1,28 @@
 <?xml version="1.0"?>
 <tryton>
     <data>
+        <record model="ir.ui.view" id="sale_configuration_view_form_extended_quantities">
+            <field name="model">sale.configuration</field>
+            <field name="inherit" ref="sale.sale_configuration_view_form"/>
+            <field name="name">configuration_form</field>
+        </record>
+
         <record model="ir.ui.view" id="product_view_form_extended_quantities">
             <field name="model">product.product</field>
             <field name="inherit" ref="product.product_view_form"/>
             <field name="name">product_form</field>
         </record>
 
-        <record model="ir.ui.view" id="product_view_tree_extended_quantities">
-            <field name="model">product.product</field>
-            <field name="inherit" ref="product.product_view_tree"/>
-            <field name="name">product_tree</field>
-        </record>
-
         <record model="ir.ui.view" id="template_view_tree_extended_quantities">
             <field name="model">product.template</field>
             <field name="inherit" ref="product.template_view_tree"/>
             <field name="name">template_tree</field>
+        </record>
+
+        <record model="ir.ui.view" id="template_view_form_extended_quantities_variants">
+            <field name="model">product.template</field>
+            <field name="inherit" ref="product.template_view_form"/>
+            <field name="name">template_form_variants</field>
         </record>
 
         <record model="ir.ui.view" id="product_view_tree_cost_currency_extended_quantities">
@@ -54,6 +60,12 @@
             <field name="model">sale.sale</field>
             <field name="inherit" ref="sale.sale_view_form"/>
             <field name="name">sale_form_no_sequence_lines</field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_view_form_filter_stock_products">
+            <field name="model">sale.sale</field>
+            <field name="inherit" ref="sale.sale_view_form"/>
+            <field name="name">sale_form_filter_stock</field>
         </record>
 
         <record model="ir.ui.view" id="purchase_view_form_no_sequence_lines">
@@ -107,5 +119,24 @@
 ]]></field>
         </record>
 
+    </data>
+    <data depends="sale_pos">
+        <record model="ir.ui.view" id="sale_pos_line_view_tree_extended_quantities">
+            <field name="model">sale.line</field>
+            <field name="inherit" ref="sale_pos.sale_line_view_tree"/>
+            <field name="name">sale_pos_line_tree</field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_pos_line_view_tree_no_editable_extended_quantities">
+            <field name="model">sale.line</field>
+            <field name="inherit" ref="sale_pos.sale_line_view_tree_no_editable"/>
+            <field name="name">sale_pos_line_tree_no_editable</field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_pos_view_form_filter_stock_products">
+            <field name="model">sale.sale</field>
+            <field name="inherit" ref="sale_pos.sale_pos_view_form"/>
+            <field name="name">sale_pos_form_filter_stock</field>
+        </record>
     </data>
 </tryton>
