@@ -9,3 +9,4 @@ desktop.ini
 *.swp
 *.swo
 .DS_Store
+setup.py
