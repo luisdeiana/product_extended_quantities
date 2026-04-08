@@ -12,6 +12,9 @@ class Product(metaclass=PoolMeta):
     forecast_quantity = fields.Function(
         fields.Float('Stock Previsto', digits='default_uom', readonly=True),
         'get_quantity', searcher='search_quantity')
+    code_display = fields.Function(
+        fields.Char('Codigo', readonly=True),
+        'on_change_with_code_display')
 
     @classmethod
     def _get_default_stock_context(cls):
@@ -73,6 +76,10 @@ class Product(metaclass=PoolMeta):
         if code:
             return f'[{code}] {rec_name}'
         return rec_name
+
+    @fields.depends('code', 'suffix_code')
+    def on_change_with_code_display(self, name=None):
+        return (self.code or self.suffix_code or '')
 
     @classmethod
     def search_rec_name(cls, name, clause):

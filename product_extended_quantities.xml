@@ -32,6 +32,12 @@
             <field name="name">product_tree_cost_currency</field>
         </record>
 
+        <record model="ir.ui.view" id="product_list_sale_line_extended_quantities">
+            <field name="model">product.product</field>
+            <field name="inherit" ref="sale.product_view_list_sale_line"/>
+            <field name="name">product_list_sale_line</field>
+        </record>
+
         <record model="ir.ui.view" id="sale_line_view_form_extended_quantities">
             <field name="model">sale.line</field>
             <field name="inherit" ref="sale.sale_line_view_form"/>
